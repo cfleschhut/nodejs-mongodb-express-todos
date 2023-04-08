@@ -4,12 +4,18 @@ const http = require('http');
 const { flaschenpost } = require('flaschenpost');
 const { processenv } = require('processenv');
 const { getApi } = require('./lib/getApi');
-const { InMemoryStore } = require('./lib/store/InMemoryStore');
+const { MongoDbStore } = require('./lib/store/MongoDbStore');
 
 (async () => {
   const logger = flaschenpost.getLogger();
 
-  const store = new InMemoryStore();
+  const store = new MongoDbStore({
+    hostname: 'localhost',
+    port: 27017,
+    database: 'todos',
+    username: 'node',
+    password: 'node',
+  });
 
   await store.initialize();
 
